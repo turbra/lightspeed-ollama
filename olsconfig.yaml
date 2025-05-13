@@ -1,0 +1,21 @@
+apiVersion: ols.openshift.io/v1alpha1
+kind: OLSConfig
+metadata:
+  name: cluster
+spec:
+  llm:
+    providers:
+      - credentialsSecretRef:
+          name: ollama-credentials
+        models:
+          - contextWindowSize: 50000 # tweak accordingly
+            name: '<your-model-name>'  # e.g., 'qwen3:32b'
+            parameters:
+              maxTokensForResponse: 30000 # tweak accordingly
+        name: ollama-provider
+        type: openai
+        url: 'http://<your-ollama-host>:<port>/v1'  # e.g., http://ollama.apps.cluster.local:11434/v1
+  ols:
+    defaultModel: '<your-model-name>'
+    defaultProvider: ollama-provider
+    logLevel: INFO
